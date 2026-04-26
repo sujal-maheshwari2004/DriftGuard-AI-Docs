@@ -18,7 +18,6 @@ const config: Config = {
   projectName: 'driftguard-docs',
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
