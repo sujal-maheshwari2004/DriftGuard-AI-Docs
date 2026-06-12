@@ -9,7 +9,7 @@ description: Install DriftGuard and its dependencies.
 
 ## Requirements
 
-- Python `>= 3.9`
+- Python `>= 3.11`
 - pip
 
 ## Install from PyPI
@@ -40,6 +40,12 @@ Install LangGraph demo dependencies:
 pip install "driftguard-ai[demo]"
 ```
 
+Install Postgres persistence dependencies:
+
+```bash
+pip install "driftguard-ai[postgres]"
+```
+
 Install everything for local development:
 
 ```bash
@@ -53,7 +59,7 @@ from driftguard import DriftGuard
 
 guard = DriftGuard()
 print(guard.stats())
-# → {'nodes': 0, 'edges': 0}
+# → {'mistakes': {'nodes': 0, 'edges': 0}, 'successes': {'nodes': 0, 'edges': 0}}
 ```
 
 ## Entry points

@@ -8,6 +8,17 @@ description: How DriftGuard's semantic graph stores, merges, and prunes causal m
 
 The memory graph is DriftGuard's core data structure. It is a directed graph where nodes represent normalized text concepts and edges represent causal relationships.
 
+## Two independent graphs
+
+DriftGuard actually maintains **two** memory graphs side by side:
+
+- the **mistake graph** — built from `record()` calls
+- the **success graph** — built from `record_success()` calls
+
+They share the same structure, merge engine, and prune engine, but are completely separate stores with their own persistence files/tables. Recording a mistake never affects the success graph and vice versa. See [Success Memory](./success-memory) for details on the success graph and how it surfaces `reinforcements`.
+
+The rest of this page describes the structure that both graphs share.
+
 ## Structure
 
 Every `record()` call adds a three-node chain:
@@ -57,25 +68,34 @@ This means two paraphrased mistakes reinforce **one memory** rather than fragmen
 
 ```python
 print(guard.stats())
-# → {'nodes': 9, 'edges': 8}
+# → {'mistakes': {'nodes': 9, 'edges': 8}, 'successes': {'nodes': 4, 'edges': 3}}
 ```
+
+`guard.stats()` always reports both graphs — `mistakes` and `successes` — each with their own `nodes`/`edges` counts.
 
 ## Pruning
 
-Call `guard.prune()` on a schedule to keep the graph healthy:
+Call `guard.prune()` on a schedule to keep both graphs healthy:
 
 ```python
 result = guard.prune()
 print(result)
 # → {
 #     'status': 'pruned',
-#     'before': {'nodes': 12, 'edges': 10},
-#     'after':  {'nodes': 9,  'edges': 8},
-#     'details': {...}
+#     'mistakes': {
+#       'before': {'nodes': 12, 'edges': 10},
+#       'after':  {'nodes': 9,  'edges': 8},
+#       'details': {...}
+#     },
+#     'successes': {
+#       'before': {'nodes': 5, 'edges': 4},
+#       'after':  {'nodes': 4, 'edges': 3},
+#       'details': {...}
+#     }
 #   }
 ```
 
-Pruning removes:
+`prune()` runs a full deep-prune pass over the mistake graph **and** the success graph in a single call. Pruning removes:
 
 1. **Weak edges** — seen fewer times than `prune_edge_min_frequency` (default `2`)
 2. **Stale nodes** — not updated within `prune_node_stale_days` (default `60`)
@@ -83,6 +103,6 @@ Pruning removes:
 
 ## Persistence
 
-The graph saves automatically after every `record()` call. It loads automatically when `DriftGuard` is instantiated.
+Both graphs save automatically after every `record()` / `record_success()` call, and load automatically when `DriftGuard` is instantiated.
 
-See [Storage Backends](./storage) for JSON vs SQLite options.
+See [Storage Backends](./storage) for JSON, SQLite, and Postgres options.

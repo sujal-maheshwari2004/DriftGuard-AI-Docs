@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
         'how-it-works',
         'guard-policies',
         'memory-graph',
+        'success-memory',
         'storage',
       ],
     },

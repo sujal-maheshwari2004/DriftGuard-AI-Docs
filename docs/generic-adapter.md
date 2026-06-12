@@ -20,19 +20,21 @@ result = review_payload(
     {"action": "increase salt", "attempt": 2},
 )
 
-print(result["warnings_count"])   # → 1
-print(result["confidence"])       # → 0.84
+print(result["warnings_count"])         # → 1
+print(result["reinforcements_count"])   # → 0
+print(result["confidence"])             # → 0.84
 print(result["review"].warnings[0].risk)  # → "too salty"
 ```
 
 ## Return shape
 
-| Key              | Type              | Description                        |
-|------------------|-------------------|------------------------------------|
-| `payload`        | dict              | The original payload passed in     |
-| `review`         | RetrievalResponse | Full DriftGuard review object      |
-| `warnings_count` | int               | Number of warnings                 |
-| `confidence`     | float             | Highest warning confidence         |
+| Key                    | Type              | Description                    |
+|------------------------|-------------------|--------------------------------|
+| `payload`              | dict              | The original payload passed in |
+| `review`               | RetrievalResponse | Full DriftGuard review object  |
+| `warnings_count`       | int               | Number of warnings             |
+| `reinforcements_count` | int               | Number of reinforcements       |
+| `confidence`           | float             | Highest warning confidence     |
 
 ## Custom action key
 

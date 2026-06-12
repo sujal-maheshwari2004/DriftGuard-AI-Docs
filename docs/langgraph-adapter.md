@@ -56,12 +56,14 @@ app = graph.compile()
 
 ## State keys written by the review node
 
-| Key                    | Type          | Description                        |
-|------------------------|---------------|------------------------------------|
-| `guard_review`         | RetrievalResponse | Full review object              |
-| `guard_warnings_count` | int           | Number of warnings found           |
-| `guard_confidence`     | float         | Highest warning confidence         |
-| `guard_top_warning`    | dict or None  | `trigger`, `risk`, `confidence`    |
+| Key                          | Type              | Description                               |
+|------------------------------|-------------------|-------------------------------------------|
+| `guard_review`               | RetrievalResponse | Full review object                        |
+| `guard_warnings_count`       | int               | Number of warnings found                  |
+| `guard_confidence`           | float             | Highest warning confidence                |
+| `guard_top_warning`          | dict or None      | `trigger`, `risk`, `confidence`           |
+| `guard_reinforcements_count` | int               | Number of reinforcements found            |
+| `guard_top_reinforcement`    | dict or None      | `trigger`, `recommendation`, `confidence` |
 
 ## Custom key names
 
@@ -73,6 +75,8 @@ review_node = make_langgraph_review_node(
     warnings_key="dg_warnings",
     confidence_key="dg_confidence",
     top_warning_key="dg_top_warning",
+    reinforcements_key="dg_reinforcements",
+    top_reinforcement_key="dg_top_reinforcement",
 )
 ```
 

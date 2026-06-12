@@ -56,6 +56,8 @@ deduplicate + sort by confidence descending
 return RetrievalResponse
 ```
 
+The same pipeline runs a second time against the **success graph**, building `reinforcements` from `(trigger, recommendation)` pairs using the same confidence scoring. Both results — `warnings` and `reinforcements` — are attached to the same `RetrievalResponse`. See [Success Memory](./success-memory).
+
 ### Confidence scoring
 
 ```

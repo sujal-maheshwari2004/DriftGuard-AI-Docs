@@ -24,11 +24,14 @@ settings = DriftGuardSettings(
 
 ### Storage
 
-| Setting             | Default                                    | Description                          |
-|---------------------|--------------------------------------------|--------------------------------------|
-| `storage_backend`   | `"json"`                                   | `"json"` or `"sqlite"`               |
-| `graph_filepath`    | `"driftguard_graph.json"`                  | Path for JSON backend                |
-| `sqlite_filepath`   | `"driftguard_graph.sqlite3"`               | Path for SQLite backend              |
+| Setting                   | Default                              | Description                                                  |
+|---------------------------|--------------------------------------|--------------------------------------------------------------|
+| `storage_backend`         | `"json"`                             | `"json"`, `"sqlite"`, or `"postgres"`                        |
+| `graph_filepath`          | `"driftguard_graph.json"`            | Path for mistake graph (JSON backend)                        |
+| `sqlite_filepath`         | `"driftguard_graph.sqlite3"`         | Path for mistake graph (SQLite backend)                      |
+| `success_graph_filepath`  | `"driftguard_success_graph.json"`    | Path for success graph (JSON backend)                        |
+| `success_sqlite_filepath` | `"driftguard_success_graph.sqlite3"` | Path for success graph (SQLite backend)                      |
+| `postgres_dsn`            | `None`                               | Postgres connection string (required for `postgres` backend) |
 
 ### Embedding
 

@@ -55,10 +55,11 @@ When a similar action appears later — like `"add more salt"` or `"season aggre
 ## What DriftGuard provides
 
 - Semantic mistake memory
-- Similarity-aware warning retrieval
+- Semantic success memory with positive reinforcement
+- Similarity-aware warning and reinforcement retrieval
 - Policy-based execution guardrails
 - Merge and deduplicate memory graphs
-- JSON or SQLite persistence
+- JSON, SQLite, or Postgres persistence
 - Runtime metrics and observability
 - Pruning of stale weak memories
 - MCP server integration

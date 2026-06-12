@@ -16,13 +16,14 @@ driftguard-mcp
 
 ## Available tools
 
-| Tool                | Description                                      |
-|---------------------|--------------------------------------------------|
-| `register_mistake`  | Store a causal memory: action, feedback, outcome |
-| `query_memory`      | Retrieve warnings for a given context            |
-| `deep_prune`        | Run a full graph cleanup pass                    |
-| `graph_stats`       | Return current node and edge counts              |
-| `guard_metrics`     | Return runtime review counters and gauges        |
+| Tool               | Description                                        |
+|--------------------|----------------------------------------------------|
+| `register_mistake` | Store a causal memory in the mistake graph         |
+| `register_success` | Store a causal memory in the success graph         |
+| `query_memory`     | Retrieve warnings and reinforcements for a context |
+| `deep_prune`       | Run a full cleanup pass over both memory graphs    |
+| `graph_stats`      | Return node and edge counts for both graphs        |
+| `guard_metrics`    | Return runtime review counters and gauges          |
 
 ## Claude Desktop config
 
@@ -50,6 +51,16 @@ register_mistake(
 )
 ```
 
+### Register a success
+
+```
+register_success(
+  action="add more salt",
+  feedback="well seasoned",
+  outcome="dish praised"
+)
+```
+
 ### Query memory
 
 ```
@@ -69,6 +80,14 @@ Returns:
       "confidence": 0.87
     }
   ],
+  "reinforcements": [
+    {
+      "trigger": "add more salt",
+      "recommendation": "well seasoned",
+      "frequency": 1,
+      "confidence": 0.81
+    }
+  ],
   "confidence": 0.87
 }
 ```
@@ -82,7 +101,10 @@ graph_stats()
 Returns:
 
 ```json
-{ "nodes": 9, "edges": 8 }
+{
+  "mistakes": { "nodes": 9, "edges": 8 },
+  "successes": { "nodes": 3, "edges": 2 }
+}
 ```
 
 ## Custom runtime config
